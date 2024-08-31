@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="https://www.thymeleaf.org">
+<head th:replace="~{head :: common-head}"></head>
+<body>
+<div class="center-wrapper container">
+    <form name="login" th:action="@{/login}" method="POST">
+        <fieldset>
+            <article th:if="${param.error}" class="pico-background-red-650">
+                Bad credentials
+            </article>
+            <label>
+                Username
+                <input
+                        type="text"
+                        name="username"
+                        placeholder="Username"
+                        maxlength="255"
+                        required
+                />
+            </label>
+            <label>
+                Password
+                <input
+                        type="password"
+                        name="password"
+                        placeholder="Password"
+                        maxlength="255"
+                        required
+                />
+            </label>
+        </fieldset>
+        <input
+                type="submit"
+                value="Login"
+        />
+    </form>
+</div>
+</body>
+</html>

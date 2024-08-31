@@ -1,0 +1,42 @@
+services:
+  simple_sharing:
+    build: .c
+    container_name: simple_sharing
+    volumes:
+      - ./data:/opt/app/data
+    environment:
+      - ALLOWED_ORIGIN=domain.name
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.simple_sharing.rule=Host(`app.yourdomain.com`)"
+      - "traefik.http.routers.simple_sharing.entrypoints=websecure"
+      - "traefik.http.routers.simple_sharing.tls.certresolver=myresolver"
+      - "traefik.http.services.simple_sharing.loadbalancer.server.port=8080"
+    restart: unless-stopped
+    networks:
+      - web
+
+  traefik:
+    image: traefik:v3.1
+    container_name: traefik
+    ports:
+      - "80:80"
+      - "443:443"
+      #- "8080:8080"
+    volumes:
+      - "/var/run/docker.sock:/var/run/docker.sock:ro"
+      - "./letsencrypt:/letsencrypt"
+      - "./traefik.yml:/etc/traefik/traefik.yml:ro"
+    networks:
+      - web
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.traefik.rule=Host(`traefik.yourdomain.com`)"
+      - "traefik.http.routers.traefik.entrypoints=websecure"
+      - "traefik.http.routers.traefik.tls.certresolver=myresolver"
+    restart: unless-stopped
+
+networks:
+  web:
+    name: web
+    driver: bridge

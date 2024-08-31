@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="https://www.thymeleaf.org"
+>
+<head th:replace="~{head :: common-head}"></head>
+<body>
+<header th:replace="~{header :: nav-header}"></header>
+<script src="https://cdn.jsdelivr.net/npm/@stomp/stompjs@5.0.0/bundles/stomp.umd.min.js"></script>
+<div class="container">
+    <div class="sharing-controls-wrapper">
+        <select id="resolution-picker" aria-label="Resolution">
+            <option value="0" selected>Source</option>
+            <option value="480">480</option>
+            <option value="720">720</option>
+            <option value="1080">1080</option>
+            <option value="1440">1440</option>
+        </select>
+        <select id="framerate-picker" aria-label="Framerate">
+            <option value="15">15</option>
+            <option value="30" selected>30</option>
+            <option value="60">60</option>
+        </select>
+        <label>Audio
+            <input type="checkbox" id="isAudio">
+        </label>
+        <button class="start-sharing">Start</button>
+        <button class="stop-sharing" disabled>Stop</button>
+    </div>
+</div>
+<div class="container video-wrapper"></div>
+<script th:src="@{/connection.js}"></script>
+</body>
+</html>

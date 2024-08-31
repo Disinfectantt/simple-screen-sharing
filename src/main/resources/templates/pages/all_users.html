@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en">
+<head th:replace="~{head :: common-head}"></head>
+<body>
+<script src="https://unpkg.com/htmx.org@2.0.2"></script>
+<script src="https://unpkg.com/htmx-ext-sse@2.0.0/sse.js"></script>
+<script th:src="@{/htmxConfig.js}"></script>
+<header th:replace="~{header :: nav-header}"></header>
+<div th:replace="~{layouts/modal :: content('Add new user', '/users/user_form')}"></div>
+<div hx-ext="sse" sse-connect="/users/sseUsers" sse-swap="message">
+    <div th:replace="~{layouts/users :: users-list(${users})}"></div>
+</div>
+<script th:src="@{/modals.js}"></script>
+</body>
+</html>

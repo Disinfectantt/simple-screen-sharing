@@ -1,0 +1,24 @@
+<div th:fragment="content(btn_title, form_url)" class="container">
+    <button
+            th:attr="hx-get=${form_url}"
+            data-target="edit-form-modal"
+            class="pico-background-green-650 modal-btn"
+            th:text="${btn_title}"
+            hx-target="#form-edit"
+            hx-swap="outerHTML">
+    </button>
+    <dialog id="edit-form-modal" class="modal">
+        <article>
+            <header>
+                <button aria-label="Close"
+                        rel="prev"
+                        class="modal-btn"
+                        data-target="edit-form-modal"
+                ></button>
+            </header>
+            <div id="form-edit">
+                <article aria-busy="true"></article>
+            </div>
+        </article>
+    </dialog>
+</div>

@@ -1,0 +1,8 @@
+<button th:fragment="content(url, key)"
+        class="outline pico-color-green-650 edit-btn modal-btn"
+        th:attr="hx-get=${url} + ${key}"
+        data-target="edit-form-modal"
+        hx-target="#form-edit"
+        hx-swap="outerHTML">
+    Edit
+</button>

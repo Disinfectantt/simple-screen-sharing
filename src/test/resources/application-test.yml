@@ -1,0 +1,11 @@
+ALLOWED_ORIGIN: "*"
+spring:
+  datasource:
+    url: jdbc:sqlite:data/db.db
+    driver-class-name: org.sqlite.JDBC
+    username:
+    password:
+  jpa:
+    database-platform: org.hibernate.community.dialect.SQLiteDialect
+    hibernate:
+      ddl-auto: create-drop

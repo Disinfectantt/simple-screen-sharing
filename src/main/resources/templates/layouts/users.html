@@ -1,0 +1,10 @@
+<div th:fragment="users-list(users)" class="container items-wrapper" hx-target="closest article" hx-swap="outerHTML">
+    <article th:each="user : ${users}" class="item">
+        <p th:text="${user.getUsername()}"></p>
+        <p th:each="role : ${user.getRoles()}" th:text="${role.getName()}"></p>
+        <footer class="btn-item-wrapper">
+            <button th:replace="~{layouts/buttons/del-btn :: content('/users/', ${user.getId()})}"></button>
+            <button th:replace="~{layouts/buttons/edit-btn :: content('/users/user_form/', ${user.getId()})}"></button>
+        </footer>
+    </article>
+</div>

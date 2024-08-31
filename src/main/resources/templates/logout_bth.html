@@ -1,0 +1,11 @@
+<div th:fragment="logout-btn">
+    <form
+            name="logoutForm"
+            th:action="@{/logout}"
+            method="post"
+            th:hidden="true"
+    >
+        <input hidden type="submit" value="Logout"/>
+    </form>
+    <a href="javascript: document.logoutForm.submit()">Logout</a>
+</div>

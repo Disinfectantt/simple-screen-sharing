@@ -1,0 +1,11 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="https://www.thymeleaf.org">
+<head th:replace="~{head :: common-head}"></head>
+<body>
+<div class="container center-wrapper">
+    <h2 th:text="${status + ' ' + error}"></h2>
+    <a th:href="@{/}">Home</a>
+</div>
+</body>
+</html>

@@ -1,0 +1,29 @@
+<div id="form-edit">
+    <form th:attr="hx-post='/users/' + ${userDto.getId() != null ? userDto.getId() : ''}"
+          hx-target="#form-edit"
+          hx-swap="outerHTML"
+          id="userForm"
+          th:object="${userDto}">
+        <fieldset>
+            <div th:if="${#fields.hasAnyErrors()}" class="form-error-wrapper container">
+                <article th:each="error : ${#fields.allErrors()}" th:text="${error}" class="pico-background-red-650">
+                </article>
+            </div>
+            <label for="username">Username*</label>
+            <input type="text" id="username" th:field="*{username}" required maxlength="255"/>
+            <label for="password">Password*</label>
+            <input type="password" id="password" th:field="*{password}" required maxlength="255"/>
+            <label th:each="role : ${roles}">
+                <input type="checkbox" th:value="${role.getId()}" th:field="*{roles}"
+                       th:checked="${userDto.getRoles() != null && userDto.getRoles().contains(role)}"/>
+                <span th:text="${role.getName()}"></span>
+            </label>
+            <label for="enabled">
+                <input type="checkbox" th:field="*{enabled}" id="enabled" checked/>
+                Enabled
+            </label>
+        </fieldset>
+        <button th:if="${userDto.getId() == null}" type="submit">Add user</button>
+        <button th:if="${userDto.getId() != null}" type="submit">Edit user</button>
+    </form>
+</div>

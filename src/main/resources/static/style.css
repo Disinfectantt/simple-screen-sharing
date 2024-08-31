@@ -1,0 +1,58 @@
+.center-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    width: 100vw;
+    flex-direction: column;
+}
+
+nav.main-tabs ul li .selected {
+    text-decoration: underline;
+}
+
+.h-center-wrapper {
+    width: 100%;
+    text-align: center;
+}
+
+.items-wrapper {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 1rem;
+    margin-top: 1rem;
+}
+
+.btn-item-wrapper button {
+    scale: 80%;
+}
+
+.btn-del {
+    font-weight: bold;
+    border-color: var(--pico-color-red-650);
+}
+
+.edit-btn {
+    border-color: var(--pico-color-green-650);
+}
+
+video{
+    width: 100%;
+    max-width: 1200px;
+}
+
+.sharing-controls-wrapper{
+    width: 100%;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+.sharing-controls-wrapper select{
+    max-width: 200px;
+}
+.sharing-controls-wrapper *{
+    margin: 0;
+}

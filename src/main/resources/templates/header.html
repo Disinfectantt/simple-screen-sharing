@@ -1,0 +1,11 @@
+<header th:fragment="nav-header" class="container">
+    <nav>
+        <ul>
+            <li><a th:href="@{/}">Home</a></li>
+            <li sec:authorize="hasRole('ADMIN')"><a th:href="@{/users/}">Users</a></li>
+            <li>
+                <div th:replace="~{logout_bth :: logout-btn}"></div>
+            </li>
+        </ul>
+    </nav>
+</header>

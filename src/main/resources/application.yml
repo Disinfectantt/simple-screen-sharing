@@ -1,0 +1,39 @@
+ALLOWED_ORIGIN: ${ALLOWED_ORIGIN}
+SPRING_PROFILES_ACTIVE: ${PROFILES_ACTIVE:prod}
+spring:
+  application:
+    name: simple-screen-sharing
+  datasource:
+    url: jdbc:sqlite:data/database.db
+    driver-class-name: org.sqlite.JDBC
+    username:
+    password:
+  jpa:
+    database-platform: org.hibernate.community.dialect.SQLiteDialect
+    hibernate:
+      ddl-auto: update
+
+---
+spring:
+  config:
+    activate:
+      on-profile: dev
+
+server:
+  ssl:
+    key-store-type: PKCS12
+    key-store: classpath:keystore/sharing.p12
+    key-store-password: password
+    key-alias: sharing
+    enabled: true
+  port: 8443
+
+---
+spring:
+  config:
+    activate:
+      on-profile: prod
+
+server:
+  port: 8080
+  forward-headers-strategy: native
