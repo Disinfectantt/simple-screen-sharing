@@ -1,26 +1,20 @@
 package com.cringee.simplescreensharing.services;
 
 import com.cringee.simplescreensharing.dto.UserDto;
-import com.cringee.simplescreensharing.models.Role;
+import com.cringee.simplescreensharing.mapper.UserMapper;
 import com.cringee.simplescreensharing.models.User;
 import com.cringee.simplescreensharing.repos.UserRepo;
+import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.HashSet;
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class UserService {
     private final UserRepo userRepo;
-    private final RoleService roleService;
     private final PasswordEncoder passwordEncoder;
-
-    UserService(UserRepo userRepo, RoleService roleService, PasswordEncoder passwordEncoder) {
-        this.userRepo = userRepo;
-        this.roleService = roleService;
-        this.passwordEncoder = passwordEncoder;
-    }
 
     public List<User> findAll() {
         return userRepo.findAll();
@@ -29,16 +23,12 @@ public class UserService {
     public UserDto findById(Long id) {
         User user = userRepo.findById(id).orElse(null);
         if (user == null) return null;
-        UserDto userDto = new UserDto();
-        userDto.setId(user.getId());
-        userDto.setUsername(user.getUsername());
-        userDto.setPassword(passwordEncoder.encode(user.getPassword()));
-        userDto.setEnabled(user.getEnabled());
-        return userDto;
+        return UserMapper.INSTANCE.toUserDto(user);
     }
 
     public void save(UserDto userDto) {
-        User user = UserDtoToUser(userDto);
+        User user = UserMapper.INSTANCE.toUser(userDto);
+        user.setPassword(passwordEncoder.encode(userDto.getPassword()));
         userRepo.save(user);
     }
 
@@ -56,8 +46,9 @@ public class UserService {
     public void update(Long id, UserDto userDto) {
         User user = userRepo.findById(id).orElse(null);
         if (user == null) return;
-        user = UserDtoToUser(userDto);
+        user = UserMapper.INSTANCE.toUser(userDto);
         user.setId(id);
+        user.setPassword(passwordEncoder.encode(userDto.getPassword()));
         userRepo.save(user);
     }
 
@@ -66,29 +57,11 @@ public class UserService {
         if (user == null) {
             return null;
         }
-        UserDto userDto = new UserDto();
-        userDto.setId(user.getId());
-        userDto.setUsername(user.getUsername());
-        userDto.setPassword(user.getPassword());
-        return userDto;
+        return UserMapper.INSTANCE.toUserDto(user);
     }
 
     public User findByUsernameUser(String username) {
         return userRepo.findByUsername(username);
-    }
-
-    private User UserDtoToUser(UserDto userDto) {
-        User user = new User();
-        user.setUsername(userDto.getUsername());
-        user.setPassword(passwordEncoder.encode(userDto.getPassword()));
-        if (userDto.getRoles() != null) {
-            user.setRoles(new HashSet<>());
-            for (var roleId : userDto.getRoles()) {
-                Role role = roleService.findById(roleId);
-                user.getRoles().add(role);
-            }
-        }
-        return user;
     }
 
 }

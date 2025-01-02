@@ -1,19 +1,18 @@
 package com.cringee.simplescreensharing.services;
 
 import com.cringee.simplescreensharing.dto.RoleDto;
+import com.cringee.simplescreensharing.mapper.RoleMapper;
 import com.cringee.simplescreensharing.models.Role;
 import com.cringee.simplescreensharing.repos.RoleRepo;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class RoleService {
     private final RoleRepo roleRepo;
-
-    public RoleService(RoleRepo roleRepo) {
-        this.roleRepo = roleRepo;
-    }
 
     public Role findByName(String name) {
         return roleRepo.findByName(name);
@@ -38,9 +37,7 @@ public class RoleService {
     }
 
     public void save(RoleDto roleDto) {
-        Role role = new Role();
-        role.setName(roleDto.getName());
-        roleRepo.save(role);
+        roleRepo.save(RoleMapper.INSTANCE.toRole(roleDto));
     }
 
     public long count() {

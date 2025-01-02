@@ -9,6 +9,7 @@ import com.cringee.simplescreensharing.services.UserService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -25,6 +26,7 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 import java.util.concurrent.CopyOnWriteArrayList;
 
+@RequiredArgsConstructor
 @RequestMapping("/users")
 @PreAuthorize("hasRole('ADMIN')")
 @Controller
@@ -34,12 +36,6 @@ public class UserController {
     private final RoleService roleService;
     private final SseEmitterService sseEmitterService;
     private final ConcurrentMap<String, CopyOnWriteArrayList<SseEmitter>> sseEmitters = new ConcurrentHashMap<>();
-
-    public UserController(UserService userService, RoleService roleService, SseEmitterService sseEmitterService) {
-        this.userService = userService;
-        this.roleService = roleService;
-        this.sseEmitterService = sseEmitterService;
-    }
 
     @GetMapping("/")
     public String all(Model model, HttpServletRequest request) {

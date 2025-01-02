@@ -238,32 +238,21 @@ function resolutionChange(e){
     if(val === 0){
         mediaOptions = {video: true};
     }else if(val === 480){
-        mediaOptions = {
-            video: {
-                height: {ideal: val},
-                frameRate: {ideal: framerate}
-            }
-        }
+        changeHeight(val);
     }else if(val === 720){
-        mediaOptions = {
-            video: {
-                height: {ideal: val},
-                frameRate: {ideal: framerate}
-            }
-        }
+        changeHeight(val);
     }else if(val === 1080){
-        mediaOptions = {
-            video: {
-                height: {ideal: val},
-                frameRate: {ideal: framerate}
-            }
-        }
+        changeHeight(val);
     }else if(val === 1440){
-        mediaOptions = {
-            video: {
-                height: {ideal: val},
-                frameRate: {ideal: framerate}
-            }
+        changeHeight(val);
+    }
+}
+
+function changeHeight(val){
+    mediaOptions = {
+        video: {
+            height: {ideal: val},
+            frameRate: {ideal: framerate}
         }
     }
 }

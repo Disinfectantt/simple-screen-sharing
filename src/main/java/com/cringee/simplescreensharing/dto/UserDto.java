@@ -21,6 +21,6 @@ public class UserDto {
     @NotNull
     @Size(min = 1, max = 255)
     private String password;
-    private Set<Long> roles;
+    private Set<RoleDto> roles;
     private Boolean enabled;
 }

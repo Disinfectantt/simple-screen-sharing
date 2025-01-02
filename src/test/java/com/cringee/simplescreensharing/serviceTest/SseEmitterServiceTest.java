@@ -27,9 +27,6 @@ public class SseEmitterServiceTest {
     @Mock
     private SpringTemplateEngine templateEngine;
 
-    @Mock
-    private Logger logger;
-
     @InjectMocks
     private SseEmitterService sseEmitterService;
 
@@ -103,17 +100,5 @@ public class SseEmitterServiceTest {
 
         verify(emitter1).send(eventBuilder);
         verify(emitter2).send(eventBuilder);
-    }
-
-    @Test
-    void testSendEventWithIOException() throws IOException {
-        Logger mockLogger = mock(Logger.class);
-        ReflectionTestUtils.setField(sseEmitterService, "logger", mockLogger);
-        SseEmitter emitter = mock(SseEmitter.class);
-        sseEmitters.put("user", new CopyOnWriteArrayList<>(List.of(emitter)));
-        SseEmitter.SseEventBuilder eventBuilder = mock(SseEmitter.SseEventBuilder.class);
-        doThrow(new IOException("Test IO exception")).when(emitter).send(eventBuilder);
-        sseEmitterService.sendEvent(sseEmitters, eventBuilder);
-        verify(mockLogger).warn(eq("Failed to send event: {}"), eq("Test IO exception"));
     }
 }

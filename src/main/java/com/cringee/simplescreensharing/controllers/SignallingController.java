@@ -1,8 +1,7 @@
 package com.cringee.simplescreensharing.controllers;
 
 import com.cringee.simplescreensharing.models.Data;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.RequiredArgsConstructor;
 import org.springframework.context.event.EventListener;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
@@ -16,15 +15,11 @@ import java.util.Set;
 import java.util.concurrent.ConcurrentSkipListSet;
 
 @Controller
+@RequiredArgsConstructor
 public class SignallingController {
 
     private final Set<String> users = new ConcurrentSkipListSet<>();
     private final SimpMessagingTemplate simpMessagingTemplate;
-    Logger logger = LoggerFactory.getLogger(SignallingController.class);
-
-    public SignallingController(SimpMessagingTemplate simpMessagingTemplate) {
-        this.simpMessagingTemplate = simpMessagingTemplate;
-    }
 
     @EventListener
     public void handleWebSocketConnectListener(SessionConnectEvent event) {

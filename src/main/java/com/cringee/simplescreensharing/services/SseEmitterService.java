@@ -1,7 +1,7 @@
 package com.cringee.simplescreensharing.services;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 import org.thymeleaf.context.Context;
@@ -12,13 +12,10 @@ import java.util.concurrent.ConcurrentMap;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 @Service
+@Slf4j
+@RequiredArgsConstructor
 public class SseEmitterService {
     private final SpringTemplateEngine templateEngine;
-    Logger logger = LoggerFactory.getLogger(SseEmitterService.class);
-
-    public SseEmitterService(SpringTemplateEngine templateEngine) {
-        this.templateEngine = templateEngine;
-    }
 
     public SseEmitter createSseEmitter(ConcurrentMap<String, CopyOnWriteArrayList<SseEmitter>> sseEmitters, String username) {
         SseEmitter sseEmitter = new SseEmitter(Long.MAX_VALUE);
@@ -48,7 +45,7 @@ public class SseEmitterService {
             try {
                 emitter.send(event);
             } catch (IOException e) {
-                logger.warn("Failed to send event: {}", e.getMessage());
+                log.warn("Failed to send event: {}", e.getMessage());
             }
         }));
     }
@@ -62,6 +59,6 @@ public class SseEmitterService {
             sseEmitters.remove(username);
         }
         if (e != null)
-            logger.warn("SseEmitter got error: {}", e.getMessage());
+            log.warn("SseEmitter got error: {}", e.getMessage());
     }
 }

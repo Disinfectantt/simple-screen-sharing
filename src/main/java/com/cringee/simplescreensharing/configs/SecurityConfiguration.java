@@ -1,5 +1,6 @@
 package com.cringee.simplescreensharing.configs;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -16,6 +17,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.DefaultSecurityFilterChain;
 import org.springframework.security.web.SecurityFilterChain;
 
+@RequiredArgsConstructor
 @Configuration
 @EnableWebSecurity
 @EnableMethodSecurity
@@ -23,11 +25,7 @@ public class SecurityConfiguration extends SecurityConfigurerAdapter<DefaultSecu
 
     private final UserDetailsService userDetailsService;
     @Value("${SPRING_PROFILES_ACTIVE:prod}")
-    String profile;
-
-    SecurityConfiguration(UserDetailsService userDetailsService) {
-        this.userDetailsService = userDetailsService;
-    }
+    private String profile;
 
     @Bean
     public PasswordEncoder passwordEncoder() {

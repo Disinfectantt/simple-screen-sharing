@@ -1,5 +1,4 @@
 ALLOWED_ORIGIN: ${ALLOWED_ORIGIN}
-SPRING_PROFILES_ACTIVE: ${PROFILES_ACTIVE:prod}
 spring:
   application:
     name: simple-screen-sharing
